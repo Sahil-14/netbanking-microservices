@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: netbanking-api-gateway
+
+server:
+  port: 8082
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+
+##GATEWAY CONFIGURATIONS
+cloud:
+  gateway:
+    routes:
+      ## USER SERVICE
+      - id: netbanking-user-service
+        uri: lb://netbanking-user-service
+        predicates:
+          - Path=/user/**
+        filters:
+          - StripPrefix=1
+      ## FUND TRANSFER SERVICE
+      - id: netbanking-fund-transfer-service
+        uri: lb://netbanking-fund-transfer-service
+        predicates:
+          - Path=/fund-transfer/**
+        filters:
+          - StripPrefix=1
