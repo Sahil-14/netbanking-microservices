@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: core-banking-service
+  datasource:
+    url: jdbc:mysql://localhost:8889/banking_core_service?createDatabaseIfNotExist=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+server:
+  port: 8092
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+
+info:
+  app:
+    name: ${spring.application.name}
