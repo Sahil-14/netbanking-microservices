@@ -1,59 +1,36 @@
 spring:
   application:
     name: netbanking-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: netbanking-user-service
+          uri: lb://netbanking-user-service
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
 
-## API SECURITY WITH KEYCLOAK PROVIDER
-#security:
-#  oauth2:
-#    client:
-#      provider:
-#        keycloak:
-#          authorization-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/auth
-#          jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
-#          token-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/token
-#          user-info-authentication-method: header
-#          user-info-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/userinfo
-#          user-name-attribute: preferred_username
-#      registration:
-#        internet-banking-core-client:
-#          authorization-grant-type: authorization_code
-#          client-id: internet-banking-core-client
-#          client-secret: 0efd3e37-258e-4488-96ae-1dfe34679c9d
-#          provider: keycloak
-#          redirect-uri: http://localhost:8080/login/oauth2/code/keycloak
-#          scope: openid
-#    resourceserver:
-#      jwt:
-#        jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
+        - id: netbanking-fund-transfer-service
+          uri: lb://netbanking-fund-transfer-service
+          predicates:
+            - Path=/fund-transfer/**
+          filters:
+            - StripPrefix=1
 
-## GATEWAY CONFIGURATIONS
-cloud:
-  gateway:
-    routes:
-      ## USER SERVICE
-      - id: netbanking-user-service
-        uri: lb://netbanking-user-service
-        predicates:
-          - Path=/user/**
-        filters:
-          - StripPrefix=1
-      ## FUND TRANSFER SERVICE
-      - id: netbanking-fund-transfer-service
-        uri: lb://netbanking-fund-transfer-service
-        predicates:
-          - Path=/fund-transfer/**
-        filters:
-          - StripPrefix=1
-
-## SECURITY BASED CONFIGURATIONS
-#app:
-#  config:
-#    keycloak:
-#      url: http://localhost:8080/auth
-#      realm: netbanking-microservices
+        - id: core-banking-service
+          uri: lb://core-banking-service
+          predicates:
+            - Path=/banking-core/**
+          filters:
+            - StripPrefix=1
 
 server:
   port: 8082
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
 
 eureka:
   client:
