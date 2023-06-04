@@ -1,0 +1,16 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: netbanking-fund-transfer-service
+  datasource:
+    url: jdbc:mysql://localhost:8889/banking_core_fund_transfer_service
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
