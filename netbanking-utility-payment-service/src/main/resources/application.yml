@@ -1,0 +1,22 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: netbanking-utility-payment-service
+  datasource:
+    url: jdbc:mysql://localhost:8889/banking_core_utility_payment_service
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
+
+info:
+  app:
+    name: ${spring.application.name}

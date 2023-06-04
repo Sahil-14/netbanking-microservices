@@ -24,6 +24,12 @@ spring:
             - Path=/banking-core/**
           filters:
             - StripPrefix=1
+        - id: netbanking-utility-payment-service
+          uri: lb://netbanking-utility-payment-service
+          predicates:
+            - Path=/utility-payment/**
+          filters:
+            - StripPrefix=1
 
 server:
   port: 8082
